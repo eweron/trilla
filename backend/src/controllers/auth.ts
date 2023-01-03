@@ -9,7 +9,7 @@ const secret = NODE_ENV === 'production' && JWT_SECRET || 'some-secret-key'
 const User = db.User;
 
 const signin = (req: any, res: any) => {
-  User.findOne({
+  User.scope('withPassword').findOne({
     where: {
       username: req.body.username
     },

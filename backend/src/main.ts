@@ -20,6 +20,7 @@ db.sequelize.sync()
 
 import routes from "./routes"
 routes.auth(app);
+routes.user(app);
 
 app.get('/robots.txt', function (req, res) {
   res.type('text/plain');

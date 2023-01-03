@@ -46,13 +46,13 @@ const dialog = true;
 const authStore = useAuthStore();
 
 const user: Ref<User> = ref({
-  username: null,
-  password: null,
+  username: "",
+  password: "",
 });
 
 const login = () => {
   if (user.value.username && user.value.password) {
-    authStore.login(user.value).then(() => router.push("/tasks"));
+    authStore.login(user).then(() => router.push("/"));
   }
 };
 </script>
