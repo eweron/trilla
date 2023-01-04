@@ -1,5 +1,6 @@
 wip
 # Trilla
+[![screenshot](https://github.com/taxbit/trilla/blob/master/images/screen.png?raw=true)]()
 
 ## Installation
 
