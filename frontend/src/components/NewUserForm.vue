@@ -32,7 +32,7 @@
           </v-col>
         </v-row>
         <v-btn color="success" class="mr-4" @click.prevent="create">
-          Создать
+          Create
         </v-btn>
       </v-container>
     </v-form>
