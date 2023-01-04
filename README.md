@@ -5,7 +5,7 @@ wip
 
 Trilla requires [Node.js](https://nodejs.org/) v18+ to run.
 
-Install the dependencies and devDependencies and start the server.
+Install the dependencies and devDependencies.
 
 ```sh
 cd backend
@@ -13,6 +13,16 @@ npm i
 cd ../frontend
 npm i
 ```
+
+## Database and Sequelize
+
+Running Migrations and Seeds
+```sh
+cd backend
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+```
+This will execute seed file and a demo and admin users will be inserted into the User table.
 
 ## Docker
 ```sh
