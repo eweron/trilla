@@ -61,9 +61,8 @@ const out = () => {
     </v-navigation-drawer>
     <v-app-bar :elevation="2" :order="1">
       <v-app-bar-title id="view-title"></v-app-bar-title>
-      <!-- <template v-slot:append> -->
+      <v-spacer></v-spacer>
       <div id="view-actions"></div>
-      <!-- </template> -->
     </v-app-bar>
     <v-main>
       <v-container>

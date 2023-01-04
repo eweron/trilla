@@ -48,4 +48,19 @@ const signin = (req: any, res: any) => {
     });
 };
 
-export default { signin }
+const signup = (req: any, res: any) => {
+  // Save User to Database
+  User.create({
+    username: req.body.username,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8)
+  })
+    .then((user: any) => {
+      res.send({ message: `User ${user.username} was registered successfully!` });
+    })
+    .catch((err: any) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+export default { signin, signup }

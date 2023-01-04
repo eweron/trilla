@@ -24,14 +24,33 @@
   <teleport to="#view-title">
     <div>Users</div>
   </teleport>
+  <teleport to="#view-actions">
+    <v-btn
+      @click="showNewUserForm = true"
+      color="green"
+      prepend-icon="mdi-account-plus"
+      variant="outlined"
+    >
+      New user
+    </v-btn>
+  </teleport>
+  <new-user-form
+    :show="showNewUserForm"
+    @close="showNewUserForm = false"
+    @created="updateList"
+  />
 </template>
 <script setup lang="ts">
+import NewUserForm from "@/components/NewUserForm.vue";
 import UserService from "@/services/user";
 import type { User } from "@/types";
 import { onMounted, ref, type Ref } from "vue";
 
+const showNewUserForm = ref(false);
 const users: Ref<User[]> = ref([]);
 onMounted(async () => {
   users.value = await UserService.getAll();
 });
+
+const updateList = async () => (users.value = await UserService.getAll());
 </script>
