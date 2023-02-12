@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.Role, {
+        through: "userRoles",
+      })
     }
   }
   User.init({
@@ -20,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     defaultScope: {
       attributes: {
-        exclude: ['password']
+        exclude: ['password'],
       }
     },
     scopes: {

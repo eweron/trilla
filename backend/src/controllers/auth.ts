@@ -35,15 +35,18 @@ const signin = (req: any, res: any) => {
         expiresIn: 1086400
       });
 
-      res.status(200).send({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        accessToken: token
+      user.getRoles().then((roles: any) => {
+        res.status(200).send({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          roles: roles.map((r: any) => r.name),
+          accessToken: token
+        });
       });
 
     })
-    .catch((err:any) => {
+    .catch((err: any) => {
       res.status(500).send({ message: err.message });
     });
 };
