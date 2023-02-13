@@ -6,11 +6,15 @@ module.exports = {
     return queryInterface.bulkInsert('UserRoles', [
     {
       userId: 1, //admin - administrator
-      roleId: 1
+      roleId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       userId: 2, //demo - user
-      roleId: 3
+      roleId: 3,
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
   ]);
   },

@@ -52,6 +52,16 @@ const out = () => {
           title="Users"
         ></v-list-item>
         <v-list-item
+          @click="$router.push('counterparties')"
+          prepend-icon="mdi-briefcase-variant"
+          title="Counterparties"
+        ></v-list-item>
+        <v-list-item
+          @click="$router.push('orders')"
+          prepend-icon="mdi-shopping"
+          title="Orders"
+        ></v-list-item>
+        <v-list-item
           v-if="user?.username"
           @click="out"
           prepend-icon="mdi-logout-variant"

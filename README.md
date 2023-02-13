@@ -19,7 +19,7 @@ npm i
 
 Running Migrations and Seeds
 ```sh
-cd backend
+cd backend/src
 npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
 ```
