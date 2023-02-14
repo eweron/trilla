@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Invoices', {
+    await queryInterface.createTable('Purchases', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,42 +10,55 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       number: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
-      orderId: {
+      discription: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      supplier: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Orders',
+          model: 'Counterparties',
           key: 'id',
         },
         allowNull: false,
         onDelete: 'CASCADE'
       },
-      currencyId: {
+      customer: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Currencies',
+          model: 'Counterparties',
           key: 'id',
         },
         allowNull: false,
-        onDelete: 'RESTRICT'
-      },
-      summ: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
+      },
+      paidAt: {
+        allowNull: true,
         type: Sequelize.DATE
-      }
+      },
+      deliveredAt: {
+        allowNull: true,
+        type: Sequelize.DATE
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Invoices');
+    await queryInterface.dropTable('Purchases');
   }
 };

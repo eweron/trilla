@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Orders', {
+    await queryInterface.createTable('Invoices', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,40 +13,36 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      status: {
-        type: Sequelize.STRING,
+      orderId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Orders',
+          key: 'id',
+        },
         allowNull: true,
+        onDelete: 'CASCADE'
       },
-      discription: {
-        type: Sequelize.TEXT,
+      purchaseId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Purchases',
+          key: 'id',
+        },
         allowNull: true,
+        onDelete: 'CASCADE'
       },
-      seller: {
+      currencyId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Counterparties',
+          model: 'Currencies',
           key: 'id',
         },
         allowNull: false,
-        onDelete: 'CASCADE'
+        onDelete: 'RESTRICT'
       },
-      customer: {
+      summ: {
         type: Sequelize.INTEGER,
-        references: {
-          model: 'Counterparties',
-          key: 'id',
-        },
         allowNull: false,
-        onDelete: 'CASCADE'
-      },
-      carrier: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Counterparties',
-          key: 'id',
-        },
-        allowNull: false,
-        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -57,18 +53,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
-      },
-      paidAt: {
-        allowNull: true,
-        type: Sequelize.DATE
-      },
-      deliveredAt: {
-        allowNull: true,
-        type: Sequelize.DATE
-      },
+      }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Orders');
+    await queryInterface.dropTable('Invoices');
   }
 };
