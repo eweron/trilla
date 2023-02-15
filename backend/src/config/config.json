@@ -3,7 +3,7 @@
     "username": "app",
     "password": "secret",
     "database": "app",
-    "host": "localhost",
+    "host": "mysql-trilla",
     "dialect": "mysql"
   },
   "test": {

@@ -24,29 +24,29 @@
   <teleport to="#view-title">
     <div>Orders</div>
   </teleport>
-  <!-- <teleport to="#view-actions">
-      <v-btn
-        @click="showNewUserForm = true"
-        color="green"
-        prepend-icon="mdi-account-plus"
-        variant="outlined"
-      >
-        New user
-      </v-btn>
-    </teleport> -->
-  <!-- <new-user-form
-      :show="showNewUserForm"
-      @close="showNewUserForm = false"
-      @created="updateList"
-    /> -->
+  <teleport to="#view-actions">
+    <v-btn
+      @click="showNewOrderForm = true"
+      color="green"
+      prepend-icon="mdi-shopping-outline"
+      variant="outlined"
+    >
+      New order
+    </v-btn>
+  </teleport>
+  <new-order-form
+    :show="showNewOrderForm"
+    @close="showNewOrderForm = false"
+    @created="updateList"
+  />
 </template>
 <script setup lang="ts">
-// import NewUserForm from "@/components/NewUserForm.vue";
+import NewOrderForm from "@/components/NewOrderForm.vue";
 import OrdersService from "@/services/orders";
 import type { Order } from "@/types";
 import { onMounted, ref, type Ref } from "vue";
 
-// const showNewUserForm = ref(false);
+const showNewOrderForm = ref(false);
 const orders: Ref<Order[]> = ref([]);
 onMounted(async () => {
   orders.value = await OrdersService.getAll();
