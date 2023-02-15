@@ -18,15 +18,25 @@
                 ></v-select>
               </v-col>
             </v-row>
+            <v-row>
+              <v-col cols="12" sm="6">
+                <v-select
+                  :items="
+                    counterparties?.map((c) => ({ title: c.name, value: c.id }))
+                  "
+                  label="Counterparties"
+                ></v-select>
+              </v-col>
+            </v-row>
           </v-container>
           <small>*indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+          <v-btn color="blue-darken-1" variant="text" @click="$emit('close')">
             Close
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+          <v-btn color="blue-darken-1" variant="text" @click="$emit('close')">
             Save
           </v-btn>
         </v-card-actions>
@@ -35,11 +45,17 @@
   </v-row>
 </template>
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
+import { useCounterpartyStore } from "@/stores/counterparties";
+import { storeToRefs } from "pinia";
 
 const props = defineProps<{
   show: boolean;
 }>();
 
 const dialog = computed(() => props.show);
+
+const { counterparties } = storeToRefs(useCounterpartyStore());
+const { fetchAll: fetchAllCounterparties } = useCounterpartyStore();
+onMounted(() => fetchAllCounterparties());
 </script>

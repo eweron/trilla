@@ -34,11 +34,7 @@
       New order
     </v-btn>
   </teleport>
-  <new-order-form
-    :show="showNewOrderForm"
-    @close="showNewOrderForm = false"
-    @created="updateList"
-  />
+  <new-order-form :show="showNewOrderForm" @close="showNewOrderForm = false" />
 </template>
 <script setup lang="ts">
 import NewOrderForm from "@/components/NewOrderForm.vue";
