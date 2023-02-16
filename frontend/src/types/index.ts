@@ -13,5 +13,11 @@ export type Counterparty = {
 
 export type Order = {
   id?: number | null;
-  number: number | string;
+  number: number | string | null;
+  seller: number | null;
+  Seller: Counterparty | null;
+  customer: number | null;
+  Customer: Counterparty | null;
+  status: string | null;
+  description: string | null;
 };

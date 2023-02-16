@@ -2,7 +2,11 @@ import db from "../models";
 const Order = db.Order;
 
 function all(req: any, res: any): void {
-    Order.findAll()
+    Order.findAll({
+      include: [
+        'Seller', 'Customer'
+      ],
+    })
       .then((orders: any) => {
         if (!orders) {
           return res.status(404).send({ message: "Orders Not found." });
@@ -14,8 +18,27 @@ function all(req: any, res: any): void {
       });
 };
 
+function create(req: any, res: any): void {
+  console.log(req.body);
+  
+  Order.create({
+    number: req.body.number,
+    status: req.body.status || 'new',
+    discription: req.body.discription,
+    seller: req.body.seller,
+    customer: req.body.customer,
+    carrier: req.body.carrier,
+  })
+    .then((order: any) => {
+      res.status(200).send(order);
+    })
+    .catch((err: any) => {
+      res.status(500).send({ message: err.message });
+    });    
+}
+
 const ordersController = {
-  all,
+  all, create
 }
 
 export default ordersController

@@ -15,4 +15,10 @@ export default function(app: any) {
     [authJwt.verifyToken],
     ordersController.all
   );
+
+  app.post(
+    "/api/order/new",
+    [authJwt.verifyToken],
+    ordersController.create
+  );
 };

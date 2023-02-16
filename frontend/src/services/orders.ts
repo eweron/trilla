@@ -1,3 +1,4 @@
+import type { Order } from "@/types";
 import axios from "axios";
 import authHeader from "./auth-header";
 
@@ -9,6 +10,13 @@ class OrderService {
       headers: authHeader(),
     });
     return response.data;
+  }
+
+  async create(order: Order) {
+    const response = await axios.post(API_URL + "order/new", order, {
+      headers: authHeader(),
+    });
+    return response.data as Array<Order>;
   }
 }
 

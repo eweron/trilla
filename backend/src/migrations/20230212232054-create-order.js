@@ -45,7 +45,7 @@ module.exports = {
           model: 'Counterparties',
           key: 'id',
         },
-        allowNull: false,
+        allowNull: true,
         onDelete: 'CASCADE'
       },
       createdAt: {

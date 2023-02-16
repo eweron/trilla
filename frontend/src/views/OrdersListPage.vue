@@ -3,12 +3,12 @@
     <v-list-item
       v-for="order in orders"
       :key="order.id!"
-      :title="order.number"
-      :subtitle="order.number"
+      :title="order.number!"
+      :subtitle="`seller: ${order.Seller?.name} | customer: ${order.Customer?.name}`"
     >
       <template v-slot:prepend>
         <v-avatar color="grey-lighten-1">
-          <v-icon color="white">mdi-briefcase-variant</v-icon>
+          <v-icon color="white">mdi-shopping</v-icon>
         </v-avatar>
       </template>
 
@@ -34,19 +34,22 @@
       New order
     </v-btn>
   </teleport>
-  <new-order-form :show="showNewOrderForm" @close="showNewOrderForm = false" />
+  <new-order-form
+    v-if="showNewOrderForm"
+    :show="showNewOrderForm"
+    @close="showNewOrderForm = false"
+  />
 </template>
 <script setup lang="ts">
 import NewOrderForm from "@/components/NewOrderForm.vue";
 import OrdersService from "@/services/orders";
 import type { Order } from "@/types";
 import { onMounted, ref, type Ref } from "vue";
+import { useOrderStore } from "@/stores/orders";
+import { storeToRefs } from "pinia";
 
 const showNewOrderForm = ref(false);
-const orders: Ref<Order[]> = ref([]);
-onMounted(async () => {
-  orders.value = await OrdersService.getAll();
-});
 
-const updateList = async () => (orders.value = await OrdersService.getAll());
+const { orders } = storeToRefs(useOrderStore());
+onMounted(async () => useOrderStore().fetchAll());
 </script>

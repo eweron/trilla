@@ -12,12 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Counterparty, {
+        as: 'Seller',
         foreignKey: 'seller',
       })
       this.belongsTo(models.Counterparty, {
+        as: 'Customer',
         foreignKey: 'customer',
       })
       this.belongsTo(models.Counterparty, {
+        as: 'Carrier',
         foreignKey: 'carrier',
       })
 
@@ -26,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Order.init({
     number: DataTypes.STRING,
+    status: DataTypes.STRING,
     discription: DataTypes.TEXT,
     seller: DataTypes.INTEGER,
     customer: DataTypes.INTEGER,
