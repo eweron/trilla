@@ -4,7 +4,7 @@ const Order = db.Order;
 function all(req: any, res: any): void {
     Order.findAll({
       include: [
-        'Seller', 'Customer'
+        'Supplier', 'Seller', 'Customer', {model: db.Invoice}
       ],
     })
       .then((orders: any) => {

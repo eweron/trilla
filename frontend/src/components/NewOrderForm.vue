@@ -61,6 +61,7 @@
             </v-row>
           </v-container>
           <small>*indicates required field</small>
+          <v-divider></v-divider>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -81,6 +82,7 @@ import { useCounterpartyStore } from "@/stores/counterparties";
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";
 import type { Order, Counterparty } from "@/types";
+import InvoiceList from "@/views/Invoice/InvoiceList.vue";
 
 const props = defineProps<{
   show: boolean;

@@ -11,6 +11,7 @@ export type Counterparty = {
   name: string | null;
   description: string | null;
   taxId: string | null;
+  address: string | null;
   email: string | null;
   phone: string | null;
 };
@@ -24,4 +25,17 @@ export type Order = {
   Customer?: Counterparty | null;
   status: string | null;
   description: string | null;
+  createdAt?: string;
+  Invoices?: Invoice[] | null;
+};
+
+export type Invoice = {
+  id?: number | null;
+  number: number | string | null;
+  orderId?: number | null;
+  Order?: Order | null;
+  purchaseId?: number | null;
+  currencyId: number | null;
+  summ: number | null;
+  createdAt?: string;
 };

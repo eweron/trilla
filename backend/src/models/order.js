@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.Counterparty, {
+        as: 'Supplier',
+        foreignKey: 'supplier',
+      })
+      this.belongsTo(models.Counterparty, {
         as: 'Seller',
         foreignKey: 'seller',
       })
@@ -31,9 +35,12 @@ module.exports = (sequelize, DataTypes) => {
     number: DataTypes.STRING,
     status: DataTypes.STRING,
     discription: DataTypes.TEXT,
+    supplier: DataTypes.INTEGER,
     seller: DataTypes.INTEGER,
     customer: DataTypes.INTEGER,
-    carrier: DataTypes.INTEGER
+    carrier: DataTypes.INTEGER,
+    paidAt: DataTypes.DATE,
+    deliveredAt: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'Order',

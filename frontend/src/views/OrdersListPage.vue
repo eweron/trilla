@@ -1,26 +1,41 @@
 <template>
-  <v-list lines="two">
-    <v-list-item
-      v-for="order in orders"
-      :key="order.id!"
-      :title="order.number!"
-      :subtitle="`seller: ${order.Seller?.name} | customer: ${order.Customer?.name}`"
-    >
-      <template v-slot:prepend>
-        <v-avatar color="grey-lighten-1">
-          <v-icon color="white">mdi-shopping</v-icon>
-        </v-avatar>
+  <v-table fixed-header height="80vh" class="orders table">
+    <thead>
+      <tr class="table__head">
+        <th class="text-left">Created</th>
+        <th class="text-left">Number</th>
+        <th class="text-left">Status</th>
+        <th class="text-left">Seller</th>
+        <th class="text-left">Customer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template v-for="(order, index) in orders" :key="index">
+        <tr @click="toggleSubRow" class="table__row">
+          <td>{{ utils.dateFormat(order.createdAt!) }}</td>
+          <td>{{ order.number }}</td>
+          <td>{{ order.status }}</td>
+          <td>{{ order.Seller?.name }}</td>
+          <td>{{ order.Customer?.name }}</td>
+        </tr>
+        <tr class="table__subrow table__subrow_hidden">
+          <td colspan="5">
+            <template
+              v-for="(invoice, invoiceIdx) in order.Invoices"
+              :key="invoiceIdx"
+            >
+              <v-icon>mdi-file-document-outline</v-icon>
+              <strong>Invoice:</strong>
+              {{ invoice.number }}
+              <strong>Sum:</strong>
+              {{ invoice.summ }}
+            </template>
+          </td>
+        </tr>
       </template>
+    </tbody>
+  </v-table>
 
-      <template v-slot:append>
-        <v-btn
-          color="grey-lighten-1"
-          icon="mdi-information"
-          variant="text"
-        ></v-btn>
-      </template>
-    </v-list-item>
-  </v-list>
   <teleport to="#view-title">
     <div>Orders</div>
   </teleport>
@@ -45,9 +60,40 @@ import NewOrderForm from "@/components/NewOrderForm.vue";
 import { onMounted, ref, type Ref } from "vue";
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";
+import { utils } from "@/utils";
 
 const showNewOrderForm = ref(false);
 
 const { orders } = storeToRefs(useOrderStore());
 onMounted(async () => useOrderStore().fetchAll());
+
+const toggleSubRow = (e: Event) => {
+  const tr = e.currentTarget as HTMLElement;
+  (tr.nextSibling as HTMLElement)?.classList.toggle("table__subrow_hidden");
+};
 </script>
+<style scoped lang="scss">
+.orders {
+  &.table {
+    .table__head {
+    }
+    .table__row {
+      cursor: pointer;
+    }
+
+    .table__subrow {
+      td {
+        opacity: 1;
+        transition: opacity 0.3s linear;
+      }
+      &.table__subrow_hidden {
+        visibility: collapse;
+        td {
+          opacity: 0;
+          transition: opacity 0.3s linear;
+        }
+      }
+    }
+  }
+}
+</style>

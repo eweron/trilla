@@ -30,6 +30,15 @@ module.exports = {
         allowNull: false,
         onDelete: 'CASCADE'
       },
+      supplier: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Counterparties',
+          key: 'id',
+        },
+        allowNull: true,
+        onDelete: 'CASCADE'
+      },
       customer: {
         type: Sequelize.INTEGER,
         references: {

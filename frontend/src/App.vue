@@ -62,6 +62,11 @@ const out = () => {
           title="Orders"
         ></v-list-item>
         <v-list-item
+          @click="$router.push('invoices')"
+          prepend-icon="mdi-file-document-multiple"
+          title="Invoices"
+        ></v-list-item>
+        <v-list-item
           v-if="user?.username"
           @click="out"
           prepend-icon="mdi-logout-variant"
@@ -81,3 +86,8 @@ const out = () => {
     </v-main>
   </v-app>
 </template>
+<style scoped lang="scss">
+.v-container {
+  max-width: none;
+}
+</style>

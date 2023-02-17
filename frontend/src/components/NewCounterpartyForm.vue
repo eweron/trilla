@@ -69,6 +69,7 @@ const counterparty = ref<Counterparty>({
   taxId: null,
   email: null,
   phone: null,
+  address: null,
 });
 
 const emits = defineEmits(["close", "created"]);
@@ -79,6 +80,7 @@ const closeSideBar = () => {
     taxId: null,
     email: null,
     phone: null,
+    address: null,
   };
   emits("close");
 };
