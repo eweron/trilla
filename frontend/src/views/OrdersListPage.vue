@@ -42,8 +42,6 @@
 </template>
 <script setup lang="ts">
 import NewOrderForm from "@/components/NewOrderForm.vue";
-import OrdersService from "@/services/orders";
-import type { Order } from "@/types";
 import { onMounted, ref, type Ref } from "vue";
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";

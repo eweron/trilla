@@ -3,8 +3,8 @@
     <v-list-item
       v-for="counterparty in counterparties"
       :key="counterparty.id!"
-      :title="counterparty.name"
-      :subtitle="counterparty.name"
+      :title="counterparty.name!"
+      :subtitle="counterparty.description!"
     >
       <template v-slot:prepend>
         <v-avatar color="grey-lighten-1">
@@ -24,34 +24,29 @@
   <teleport to="#view-title">
     <div>Counterparties</div>
   </teleport>
-  <!-- <teleport to="#view-actions">
+  <teleport to="#view-actions">
     <v-btn
-      @click="showNewUserForm = true"
+      @click="showNewCounterpartyForm = true"
       color="green"
-      prepend-icon="mdi-account-plus"
+      prepend-icon="mdi-briefcase-variant-outline"
       variant="outlined"
     >
-      New user
+      New counterparty
     </v-btn>
-  </teleport> -->
-  <!-- <new-user-form
-    :show="showNewUserForm"
-    @close="showNewUserForm = false"
-    @created="updateList"
-  /> -->
+  </teleport>
+  <new-counterparty-form
+    :show="showNewCounterpartyForm"
+    @close="showNewCounterpartyForm = false"
+  />
 </template>
 <script setup lang="ts">
-// import NewUserForm from "@/components/NewUserForm.vue";
-import CounterpartyService from "@/services/counterparties";
-import type { Counterparty } from "@/types";
+import NewCounterpartyForm from "@/components/NewCounterpartyForm.vue";
 import { onMounted, ref, type Ref } from "vue";
+import { useCounterpartyStore } from "@/stores/counterparties";
+import { storeToRefs } from "pinia";
 
-// const showNewUserForm = ref(false);
-const counterparties: Ref<Counterparty[]> = ref([]);
-onMounted(async () => {
-  counterparties.value = await CounterpartyService.getAll();
-});
+const showNewCounterpartyForm = ref(false);
 
-const updateList = async () =>
-  (counterparties.value = await CounterpartyService.getAll());
+const { counterparties } = storeToRefs(useCounterpartyStore());
+onMounted(async () => useCounterpartyStore().fetchAll());
 </script>

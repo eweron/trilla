@@ -1,3 +1,4 @@
+import type { Counterparty } from "@/types";
 import axios from "axios";
 import authHeader from "./auth-header";
 
@@ -9,6 +10,17 @@ class CounterpartyService {
       headers: authHeader(),
     });
     return response.data;
+  }
+
+  async create(counterparty: Counterparty) {
+    const response = await axios.post(
+      API_URL + "counterparty/new",
+      counterparty,
+      {
+        headers: authHeader(),
+      }
+    );
+    return response.data as Array<Counterparty>;
   }
 }
 

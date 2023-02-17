@@ -19,8 +19,21 @@ function all(req: any, res: any): void {
       });
 };
 
+function create(req: any, res: any): void {
+  const { name, taxId, description, address, email, phone } = req.body
+  Counterparty.create({
+    name, taxId, description, address, email, phone 
+  })
+    .then((counterparty: any) => {
+      res.status(200).send(counterparty);
+    })
+    .catch((err: any) => {
+      res.status(500).send({ message: err.message });
+    });    
+}
+
 const counterpartiesController = {
-  all,
+  all, create
 }
 
 export default counterpartiesController

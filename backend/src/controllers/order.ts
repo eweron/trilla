@@ -19,8 +19,6 @@ function all(req: any, res: any): void {
 };
 
 function create(req: any, res: any): void {
-  console.log(req.body);
-  
   Order.create({
     number: req.body.number,
     status: req.body.status || 'new',

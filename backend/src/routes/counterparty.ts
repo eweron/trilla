@@ -15,4 +15,10 @@ export default function(app: any) {
     [authJwt.verifyToken],
     counterpartyController.all
   );
+
+  app.post(
+    "/api/counterparty/new",
+    [authJwt.verifyToken],
+    counterpartyController.create
+  );
 };

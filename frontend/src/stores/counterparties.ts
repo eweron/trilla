@@ -11,5 +11,10 @@ export const useCounterpartyStore = defineStore("counterparties", () => {
     counterparties.value = data;
   }
 
-  return { counterparties, fetchAll };
+  async function counterpartyCreate(counterparty: Counterparty) {
+    await CounterpartyService.create(counterparty);
+    fetchAll();
+  }
+
+  return { counterparties, fetchAll, counterpartyCreate };
 });
