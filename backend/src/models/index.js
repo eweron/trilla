@@ -1,4 +1,6 @@
 'use strict';
+const dotenv = require('dotenv');
+dotenv.config()
 
 const fs = require('fs');
 const path = require('path');
@@ -9,12 +11,10 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+const {DB, DB_USER, DB_PASSWORD, NODE_ENV} = process.env
+const HOST = NODE_ENV === 'production' ? process.env.DB_HOST : 'mysql-trilla'
+
+const sequelize = new Sequelize(DB, DB_USER, DB_PASSWORD, { host: HOST, dialect: 'mysql'});
 
 fs
   .readdirSync(__dirname)
