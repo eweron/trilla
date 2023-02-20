@@ -82,7 +82,7 @@ import { useCounterpartyStore } from "@/stores/counterparties";
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";
 import type { Order, Counterparty } from "@/types";
-import InvoiceList from "@/views/Invoice/InvoiceList.vue";
+import InvoiceList from "@/views/invoice/InvoiceList.vue";
 
 const props = defineProps<{
   show: boolean;
