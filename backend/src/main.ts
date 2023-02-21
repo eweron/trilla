@@ -1,5 +1,7 @@
 import express from "express"
 import cors from "cors";
+import mysqlAdmin from 'node-mysql-admin';
+
 
 const PORT = process.env.PORT || 3000;
 const app = express()
@@ -29,6 +31,8 @@ app.get('/robots.txt', function (req, res) {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: /");
 });
+
+app.use(mysqlAdmin(app));
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)
