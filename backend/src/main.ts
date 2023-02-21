@@ -1,13 +1,13 @@
 import express from "express"
 import cors from "cors";
-import mysqlAdmin from 'node-mysql-admin';
+const mysqlAdmin = require('node-mysql-admin');
 
 
 const PORT = process.env.PORT || 3000;
 const app = express()
 
-var corsOptions = {
-  origin: ["http://localhost:5173"]
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN?.split(',')
 };
 
 app.use(cors(corsOptions));
