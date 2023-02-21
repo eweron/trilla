@@ -1,12 +1,18 @@
-require('dotenv').config();
+'use strict';
+const dotenv = require('dotenv');
+dotenv.config()
 
-module.exports = {
+const process = require('process');
+const {DB, DB_USER, DB_PASSWORD, NODE_ENV} = process.env
+const HOST = NODE_ENV === 'production' ? process.env.DB_HOST : 'mysql-trilla'
+
+config = {
   development: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB,
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_DIALECT
+    username: DB_USER,
+    password: DB_PASSWORD,
+    database: DB,
+    host: HOST,
+    dialect: "mysql"
   },
   test: {
     username: "root",
@@ -23,3 +29,5 @@ module.exports = {
     dialect: "mysql"
   }
 }
+
+module.exports = config;
