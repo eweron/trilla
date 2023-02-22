@@ -5,11 +5,11 @@ dotenv.config()
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const process = require('process');
+// const process = require('process');
 const basename = path.basename(__filename);
 // const env = process.env.NODE_ENV || 'development';
 // const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
+const db: Record<string, any> = {};
 
 const {DB, DB_USER, DB_PASSWORD, NODE_ENV} = process.env
 const HOST = NODE_ENV === 'production' ? process.env.DB_HOST : 'mysql-trilla'
@@ -35,4 +35,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;
