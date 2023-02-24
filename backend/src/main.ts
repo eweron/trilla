@@ -1,7 +1,8 @@
 import express from "express"
 import cors from "cors";
 const mysqlAdmin = require('node-mysql-admin');
-
+const dotenv = require('dotenv');
+dotenv.config()
 
 const PORT = process.env.PORT || 3000;
 const app = express()
