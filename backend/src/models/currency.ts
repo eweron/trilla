@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class Currency extends Model {
     /**
      * Helper method for defining associations.
