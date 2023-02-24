@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors";
-const mysqlAdmin = require('node-mysql-admin');
+// const mysqlAdmin = require('node-mysql-admin');
 const dotenv = require('dotenv');
 dotenv.config()
 
@@ -33,7 +33,7 @@ app.get('/robots.txt', function (req, res) {
   res.send("User-agent: *\nDisallow: /");
 });
 
-app.use(mysqlAdmin(app));
+// app.use(mysqlAdmin(app));
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)

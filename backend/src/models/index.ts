@@ -13,13 +13,14 @@ const db: Record<string, any> = {};
 
 const {DB, DB_USER, DB_PASSWORD, NODE_ENV} = process.env
 const HOST = NODE_ENV === 'production' ? process.env.DB_HOST : 'mysql-trilla'
+const EXT = NODE_ENV === 'production' ? '.js' : '.ts'
 
 const sequelize = new Sequelize(DB, DB_USER, DB_PASSWORD, { host: HOST, dialect: 'mysql'});
 
 fs
   .readdirSync(__dirname)
   .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === EXT);
   })
   .forEach(file => {
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);

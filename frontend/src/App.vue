@@ -21,6 +21,7 @@ const out = () => {
       v-model="drawer"
       :rail="rail"
       permanent
+      class="bg-indigo"
       theme="dark"
       @click="rail = false"
     >
