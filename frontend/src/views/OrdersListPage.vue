@@ -11,14 +11,14 @@
     </thead>
     <tbody>
       <template v-for="(order, index) in orders" :key="index">
-        <tr @click="toggleSubRow" class="table__row">
+        <tr @click="showOrder(order)" class="table__row">
           <td>{{ utils.dateFormat(order.createdAt!) }}</td>
           <td>{{ order.number }}</td>
           <td>{{ order.status }}</td>
           <td>{{ order.Seller?.name }}</td>
           <td>{{ order.Customer?.name }}</td>
         </tr>
-        <tr class="table__subrow table__subrow_hidden">
+        <!-- <tr class="table__subrow table__subrow_hidden">
           <td colspan="5">
             <template
               v-for="(invoice, invoiceIdx) in order.Invoices"
@@ -31,7 +31,7 @@
               {{ invoice.summ }}
             </template>
           </td>
-        </tr>
+        </tr> -->
       </template>
     </tbody>
   </v-table>
@@ -41,7 +41,7 @@
   </teleport>
   <teleport to="#view-actions">
     <v-btn
-      @click="showNewOrderForm = true"
+      @click="showOrderForm = true"
       color="green"
       prepend-icon="mdi-shopping-outline"
       variant="outlined"
@@ -49,20 +49,22 @@
       New order
     </v-btn>
   </teleport>
-  <new-order-form
-    v-if="showNewOrderForm"
-    :show="showNewOrderForm"
-    @close="showNewOrderForm = false"
+  <order-form
+    v-if="showOrderForm"
+    :show="showOrderForm"
+    :order-to-edit="orderToEdit"
+    @close="showOrderForm = false"
   />
 </template>
 <script setup lang="ts">
-import NewOrderForm from "@/components/NewOrderForm.vue";
+import OrderForm from "@/components/order/OrderForm.vue";
 import { onMounted, ref, type Ref } from "vue";
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";
 import { utils } from "@/utils";
+import type { Order } from "@/types";
 
-const showNewOrderForm = ref(false);
+const showOrderForm = ref(false);
 
 const { orders } = storeToRefs(useOrderStore());
 onMounted(async () => useOrderStore().fetchAll());
@@ -71,6 +73,12 @@ const toggleSubRow = (e: Event) => {
   const tr = e.currentTarget as HTMLElement;
   (tr.nextSibling as HTMLElement)?.classList.toggle("table__subrow_hidden");
 };
+
+const orderToEdit: Ref<Order | undefined> = ref(undefined);
+const showOrder = (order: Order) => {
+  orderToEdit.value = order;
+  showOrderForm.value = true;
+}
 </script>
 <style scoped lang="scss">
 .orders {

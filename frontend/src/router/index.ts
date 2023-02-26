@@ -4,6 +4,7 @@ import DashBoardPage from "@/views/DashBoardPage.vue";
 import CounterpartiesListPage from "@/views/CounterpartiesListPage.vue";
 import UsersListPage from "@/views/UsersListPage.vue";
 import OrdersListPage from "@/views/OrdersListPage.vue";
+import PurchasesListPage from "@/views/purchase/PurchasesListPage.vue";
 import InvoicesListPage from "@/views/invoice/InvoicesListPage.vue";
 
 const router = createRouter({
@@ -33,6 +34,11 @@ const router = createRouter({
       path: "/orders",
       name: "orders",
       component: OrdersListPage,
+    },
+    {
+      path: "/purchases",
+      name: "purchases",
+      component: PurchasesListPage,
     },
     {
       path: "/invoices",

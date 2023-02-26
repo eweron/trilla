@@ -1,5 +1,5 @@
 import authJwt from "../middlewares/auth";
-import documentsController from "../controllers/document"
+import purchasesController from "../controllers/purchase"
 
 export default function(app: any) {
   app.use(function(req: any, res: any, next: any) {
@@ -11,20 +11,14 @@ export default function(app: any) {
   });
 
   app.get(
-    "/api/invoice/all",
+    "/api/purchase/all",
     [authJwt.verifyToken],
-    documentsController.all
+    purchasesController.all
   );
 
-  app.get(
-    "/api/invoice/by_order",
+  app.post(
+    "/api/purchase/new",
     [authJwt.verifyToken],
-    documentsController.by_order
+    purchasesController.create
   );
-
-//   app.post(
-//     "/api/order/new",
-//     [authJwt.verifyToken],
-//     ordersController.create
-//   );
 };

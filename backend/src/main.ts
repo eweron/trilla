@@ -27,6 +27,7 @@ routes.user(app);
 routes.counterparty(app);
 routes.order(app);
 routes.documents(app);
+routes.purchase(app);
 
 app.get('/robots.txt', function (req, res) {
   res.type('text/plain');

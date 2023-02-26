@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" persistent width="1024">
       <v-card>
         <v-card-title>
-          <span class="text-h5">New Order</span>
+          <span class="text-h5">Order</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -62,12 +62,34 @@
           </v-container>
           <small>*indicates required field</small>
           <v-divider></v-divider>
+          <v-tabs v-model="tab">
+            <v-tab value="one">Invoices</v-tab>
+            <v-tab value="two">Item Two</v-tab>
+            <v-tab value="three">Item Three</v-tab>
+          </v-tabs>
+          <v-window v-model="tab">
+            <v-window-item value="one">
+              <invoice-list v-if="order.id" :order-id="order.id" />
+            </v-window-item>
+
+            <v-window-item value="two"> Two </v-window-item>
+
+            <v-window-item value="three"> Three </v-window-item>
+          </v-window>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green-darken-1" variant="text" @click="create">
+          <v-btn
+            v-if="!order.id"
+            color="green-darken-1"
+            variant="text"
+            @click="create"
+          >
             Create
           </v-btn>
+          <v-btn v-else color="green-darken-1" variant="text" @click="update"
+            >Update</v-btn
+          >
           <v-btn color="red-darken-1" variant="text" @click="$emit('close')">
             Cancel
           </v-btn>
@@ -77,7 +99,7 @@
   </v-row>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, reactive } from "vue";
+import { computed, onMounted, reactive, ref, type Ref } from "vue";
 import { useCounterpartyStore } from "@/stores/counterparties";
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";
@@ -86,18 +108,24 @@ import InvoiceList from "@/views/invoice/InvoiceList.vue";
 
 const props = defineProps<{
   show: boolean;
+  orderToEdit?: Order;
 }>();
 
 const emits = defineEmits(["close"]);
 
 const dialog = computed(() => props.show);
 
-const order: Order = reactive({
+const order: Ref<Order> = ref({
   number: null,
   seller: null,
   customer: null,
   status: null,
   description: null,
+});
+onMounted(() => {
+  if (props.orderToEdit?.id) {
+    order.value = { ...props.orderToEdit! };
+  }
 });
 
 const { counterparties } = storeToRefs(useCounterpartyStore());
@@ -106,7 +134,9 @@ onMounted(() => fetchAllCounterparties());
 
 const { orderCreate } = useOrderStore();
 const create = () => {
-  orderCreate(order);
+  orderCreate(order.value);
   emits("close");
 };
+const update = () => {};
+const tab = ref(null);
 </script>

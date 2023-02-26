@@ -8,11 +8,24 @@ function all(req: any, res: any): void {
             include: ['Seller', 'Customer']
         }],
     })
-      .then((invoice: any) => {
-        if (!invoice) {
+      .then((invoices: any) => {
+        if (!invoices) {
           return res.status(404).send({ message: "Invoices Not found." });
         }
-        res.status(200).send(invoice);
+        res.status(200).send(invoices);
+      })
+      .catch((err: any) => {
+        res.status(500).send({ message: err.message });
+      });
+};
+
+function by_order(req: any, res: any): void {  
+    Invoice.findAll({ where: { orderId: req.query.id } })
+      .then((invoices: any) => {
+        if (!invoices) {
+          return res.status(404).send({ message: "Invoices Not found." });
+        }
+        res.status(200).send(invoices);
       })
       .catch((err: any) => {
         res.status(500).send({ message: err.message });
@@ -37,7 +50,7 @@ function create(req: any, res: any): void {
 }
 
 const documentsController = {
-  all, create
+  all, create, by_order
 }
 
 export default documentsController

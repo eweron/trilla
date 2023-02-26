@@ -29,6 +29,16 @@ export type Order = {
   Invoices?: Invoice[] | null;
 };
 
+export type Purchase = {
+  id?: number | null;
+  number: number | string | null;
+  supplier: number | null;
+  customer: number | null;
+  status: string | null;
+  description: string | null;
+  createdAt?: string;
+};
+
 export type Invoice = {
   id?: number | null;
   number: number | string | null;

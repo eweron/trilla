@@ -63,6 +63,11 @@ const out = () => {
           title="Orders"
         ></v-list-item>
         <v-list-item
+          @click="$router.push('purchases')"
+          prepend-icon="mdi-package-variant-closed"
+          title="Purchases"
+        ></v-list-item>
+        <v-list-item
           @click="$router.push('invoices')"
           prepend-icon="mdi-file-document-multiple"
           title="Invoices"
