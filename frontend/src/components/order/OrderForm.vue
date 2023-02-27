@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent width="1024">
-      <v-card>
+      <v-card height="90vh">
         <v-card-title>
           <span class="text-h5">Order</span>
         </v-card-title>
@@ -10,7 +10,7 @@
             <v-row>
               <v-col cols="12" sm="3">
                 <v-text-field
-                  density="comfortable"
+                  density="compact"
                   v-model="order.number"
                   label="Order number *"
                   required
@@ -18,63 +18,87 @@
               </v-col>
               <v-col cols="12" sm="3">
                 <v-select
-                  density="comfortable"
+                  density="compact"
                   v-model="order.status"
                   :items="['new', 'done', 'canceled', 'paused']"
                   label="Status"
                 ></v-select>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="4">
+              <v-col cols="12" sm="3">
                 <v-select
-                  density="comfortable"
+                  density="compact"
                   :loading="!counterparties?.length"
-                  :items="
-                    counterparties?.map((c) => ({ title: c.name, value: c.id }))
-                  "
+                  :items="counterpartiesList"
                   label="Seller *"
                   v-model="order.seller"
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="4">
-                <v-select
-                  density="comfortable"
-                  :loading="!counterparties?.length"
-                  :items="
-                    counterparties?.map((c) => ({ title: c.name, value: c.id }))
-                  "
-                  v-model="order.customer"
-                  label="Customer *"
-                ></v-select>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="12">
-                <v-text-field
-                  density="comfortable"
-                  v-model="order.description"
-                  label="Description"
-                  required
-                ></v-text-field>
-              </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
           <v-divider></v-divider>
           <v-tabs v-model="tab">
-            <v-tab value="one">Invoices</v-tab>
-            <v-tab value="two">Item Two</v-tab>
-            <v-tab value="three">Item Three</v-tab>
+            <v-tab value="one">Purchase</v-tab>
+            <v-tab value="two">Sale</v-tab>
+            <v-tab value="three">Info</v-tab>
           </v-tabs>
           <v-window v-model="tab">
             <v-window-item value="one">
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="12">
+                    <v-select
+                      density="compact"
+                      :loading="!counterparties?.length"
+                      :items="counterpartiesList"
+                      label="Supplier"
+                      v-model="order.supplier"
+                    ></v-select>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-window-item>
+
+            <v-window-item value="two">
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="9">
+                    <v-select
+                      density="compact"
+                      :loading="!counterparties?.length"
+                      :items="counterpartiesList"
+                      v-model="order.customer"
+                      label="Customer *"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="3">
+                    <v-btn
+                      @click="showInvoiceForm = true"
+                      color="green"
+                      prepend-icon="mdi-file-document-plus"
+                      variant="outlined"
+                    >
+                      New invoice
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
               <invoice-list v-if="order.id" :order-id="order.id" />
             </v-window-item>
 
-            <v-window-item value="two"> Two </v-window-item>
-
-            <v-window-item value="three"> Three </v-window-item>
+            <v-window-item value="three">
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="12">
+                    <v-text-field
+                      density="comfortable"
+                      v-model="order.description"
+                      label="Description"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-window-item>
           </v-window>
         </v-card-text>
         <v-card-actions>
@@ -95,20 +119,27 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+      <invoice-form
+        v-if="showInvoiceForm"
+        :show="showInvoiceForm"
+        :order-id="order.id"
+        @close="showInvoiceForm = false"
+      />
     </v-dialog>
   </v-row>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, type Ref } from "vue";
+import { computed, onMounted, onUnmounted, reactive, ref, type Ref } from "vue";
 import { useCounterpartyStore } from "@/stores/counterparties";
 import { useOrderStore } from "@/stores/orders";
 import { storeToRefs } from "pinia";
 import type { Order, Counterparty } from "@/types";
 import InvoiceList from "@/views/invoice/InvoiceList.vue";
+import InvoiceForm from "@/components/invoice/InvoiceForm.vue";
 
 const props = defineProps<{
   show: boolean;
-  orderToEdit?: Order;
+  orderToEdit?: Order | null;
 }>();
 
 const emits = defineEmits(["close"]);
@@ -119,6 +150,7 @@ const order: Ref<Order> = ref({
   number: null,
   seller: null,
   customer: null,
+  supplier: null,
   status: null,
   description: null,
 });
@@ -129,6 +161,12 @@ onMounted(() => {
 });
 
 const { counterparties } = storeToRefs(useCounterpartyStore());
+const counterpartiesList = computed(() =>
+  counterparties?.value?.map((c) => ({
+    title: c.name,
+    value: c.id,
+  }))
+);
 const { fetchAll: fetchAllCounterparties } = useCounterpartyStore();
 onMounted(() => fetchAllCounterparties());
 
@@ -139,4 +177,6 @@ const create = () => {
 };
 const update = () => {};
 const tab = ref(null);
+
+const showInvoiceForm = ref(false);
 </script>

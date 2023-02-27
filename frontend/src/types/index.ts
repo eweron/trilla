@@ -23,6 +23,7 @@ export type Order = {
   Seller?: Counterparty | null;
   customer: number | null;
   Customer?: Counterparty | null;
+  supplier?: Counterparty | null;
   status: string | null;
   description: string | null;
   createdAt?: string;
@@ -49,3 +50,8 @@ export type Invoice = {
   summ: number | null;
   createdAt?: string;
 };
+
+export type Currency = {
+  id?: number | null;
+  name: string;
+}

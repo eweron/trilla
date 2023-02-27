@@ -35,6 +35,7 @@
     </v-btn>
   </teleport>
   <new-user-form
+    v-if="showNewUserForm"
     :show="showNewUserForm"
     @close="showNewUserForm = false"
     @created="updateList"

@@ -25,6 +25,7 @@ function create(req: any, res: any): void {
     discription: req.body.discription,
     seller: req.body.seller,
     customer: req.body.customer,
+    supplier: req.body.supplier,
     carrier: req.body.carrier,
   })
     .then((order: any) => {

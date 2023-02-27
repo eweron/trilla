@@ -74,14 +74,14 @@ const counterparty = ref<Counterparty>({
 
 const emits = defineEmits(["close", "created"]);
 const closeSideBar = () => {
-  counterparty.value = {
-    name: null,
-    description: null,
-    taxId: null,
-    email: null,
-    phone: null,
-    address: null,
-  };
+  // counterparty.value = {
+  //   name: null,
+  //   description: null,
+  //   taxId: null,
+  //   email: null,
+  //   phone: null,
+  //   address: null,
+  // };
   emits("close");
 };
 

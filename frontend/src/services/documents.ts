@@ -1,4 +1,4 @@
-import type { Invoice } from "@/types";
+import type { Invoice, Currency } from "@/types";
 import axios from "axios";
 import authHeader from "./auth-header";
 import API_URL from "./api";
@@ -21,11 +21,18 @@ class DocumentService {
     return response.data as Invoice[];
   }
 
-  async createInvoice(orderId?: number) {
-    const response = await axios.post(API_URL + "invoice/new", orderId, {
+  async createInvoice(invoice: Invoice) {
+    const response = await axios.post(API_URL + "invoice/new", invoice, {
       headers: authHeader(),
     });
     return response.data as Invoice;
+  }
+
+  async getAllCurrencies() {
+    const response = await axios.get(API_URL + "currency/all", {
+      headers: authHeader(),
+    });
+    return response.data as Currency[];
   }
 }
 

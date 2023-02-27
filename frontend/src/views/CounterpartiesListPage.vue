@@ -35,6 +35,7 @@
     </v-btn>
   </teleport>
   <new-counterparty-form
+    v-if="showNewCounterpartyForm"
     :show="showNewCounterpartyForm"
     @close="showNewCounterpartyForm = false"
   />

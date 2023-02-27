@@ -11,6 +11,12 @@ export default function(app: any) {
   });
 
   app.get(
+    "/api/currency/all",
+    [authJwt.verifyToken],
+    documentsController.allCurrencies
+  );
+
+  app.get(
     "/api/invoice/all",
     [authJwt.verifyToken],
     documentsController.all
@@ -19,12 +25,12 @@ export default function(app: any) {
   app.get(
     "/api/invoice/by_order",
     [authJwt.verifyToken],
-    documentsController.by_order
+    documentsController.invoiceByOrder
   );
 
-//   app.post(
-//     "/api/order/new",
-//     [authJwt.verifyToken],
-//     ordersController.create
-//   );
+  app.post(
+    "/api/invoice/new",
+    [authJwt.verifyToken],
+    documentsController.createInvoice
+  );
 };

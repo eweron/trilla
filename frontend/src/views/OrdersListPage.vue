@@ -53,7 +53,7 @@
     v-if="showOrderForm"
     :show="showOrderForm"
     :order-to-edit="orderToEdit"
-    @close="showOrderForm = false"
+    @close="closeOrderForm"
   />
 </template>
 <script setup lang="ts">
@@ -74,10 +74,14 @@ const toggleSubRow = (e: Event) => {
   (tr.nextSibling as HTMLElement)?.classList.toggle("table__subrow_hidden");
 };
 
-const orderToEdit: Ref<Order | undefined> = ref(undefined);
+const orderToEdit: Ref<Order | null> = ref(null);
 const showOrder = (order: Order) => {
   orderToEdit.value = order;
   showOrderForm.value = true;
+};
+const closeOrderForm = () => {
+  orderToEdit.value = null;
+  showOrderForm.value = false;
 }
 </script>
 <style scoped lang="scss">

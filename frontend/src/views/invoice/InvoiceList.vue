@@ -1,5 +1,5 @@
 <template>
-  <v-table fixed-header height="80vh">
+  <v-table fixed-header :height="listHeight">
     <thead>
       <tr>
         <th class="text-left">Created</th>
@@ -32,10 +32,12 @@ const props = defineProps<{
   orderId?: number;
 }>();
 
+const listHeight = ref("80vh");
 const { invoices } = storeToRefs(useDocumentsStore());
 onMounted(() => {
   props.orderId
-    ? useDocumentsStore().fetchInvoicesByOrder(props.orderId)
+    ? (useDocumentsStore().fetchInvoicesByOrder(props.orderId),
+      (listHeight.value = "100%"))
     : useDocumentsStore().fetchAllInvoices();
 });
 </script>
